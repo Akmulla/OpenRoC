@@ -205,6 +205,7 @@
             HasWindow = false;
             gracePeriodTimer.Stop();
             doubleCheckTimer.Stop();
+            restartTimer.Stop();
 
             Process.Refresh();
 

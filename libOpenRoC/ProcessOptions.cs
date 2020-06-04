@@ -50,7 +50,7 @@
         {
             path = string.Empty;
             workingDirectory = string.Empty;
-            crashedIfNotRunning = true;
+            crashedIfNotRunning = false;
             crashedIfUnresponsive = true;
             doubleCheckEnabled = false;
             doubleCheckDuration = 0;
