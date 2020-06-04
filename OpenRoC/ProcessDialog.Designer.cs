@@ -70,6 +70,8 @@
             this.ProcessOptionCommandLineEnabledControl = new System.Windows.Forms.CheckBox();
             this.ProcessOptionAlwaysOnTopEnabledControl = new System.Windows.Forms.CheckBox();
             this.ProcessOptionScreenshotEnabledControl = new System.Windows.Forms.CheckBox();
+            this.RestartAfterPeriod = new System.Windows.Forms.CheckBox();
+            this.RestartPeriodDuration = new System.Windows.Forms.TextBox();
             this.MonitorThisProcessGroup.SuspendLayout();
             this.ProcessCrashAssumptionsGroup.SuspendLayout();
             this.ProcessPreStartGroup.SuspendLayout();
@@ -328,6 +330,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.RestartPeriodDuration);
+            this.groupBox1.Controls.Add(this.RestartAfterPeriod);
             this.groupBox1.Controls.Add(this.StartupStateDisabledControl);
             this.groupBox1.Controls.Add(this.StartupStateRunningControl);
             this.groupBox1.Controls.Add(this.StartupStateStoppedControl);
@@ -344,7 +348,7 @@
             this.groupBox1.Controls.Add(this.ProcessOptionScreenshotEnabledControl);
             this.groupBox1.Location = new System.Drawing.Point(12, 457);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(460, 243);
+            this.groupBox1.Size = new System.Drawing.Size(460, 288);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Miscellaneous options";
@@ -393,7 +397,7 @@
             // 
             // ProcessOptionsCancelButton
             // 
-            this.ProcessOptionsCancelButton.Location = new System.Drawing.Point(294, 209);
+            this.ProcessOptionsCancelButton.Location = new System.Drawing.Point(291, 259);
             this.ProcessOptionsCancelButton.Name = "ProcessOptionsCancelButton";
             this.ProcessOptionsCancelButton.Size = new System.Drawing.Size(75, 23);
             this.ProcessOptionsCancelButton.TabIndex = 11;
@@ -403,7 +407,7 @@
             // 
             // ProcessOptionsSaveButton
             // 
-            this.ProcessOptionsSaveButton.Location = new System.Drawing.Point(375, 209);
+            this.ProcessOptionsSaveButton.Location = new System.Drawing.Point(372, 259);
             this.ProcessOptionsSaveButton.Name = "ProcessOptionsSaveButton";
             this.ProcessOptionsSaveButton.Size = new System.Drawing.Size(75, 23);
             this.ProcessOptionsSaveButton.TabIndex = 10;
@@ -489,11 +493,28 @@
             this.ProcessOptionScreenshotEnabledControl.Text = "Take a screenshot of the main display on crash";
             this.ProcessOptionScreenshotEnabledControl.UseVisualStyleBackColor = true;
             // 
+            // RestartAfterPeriod
+            // 
+            this.RestartAfterPeriod.AutoSize = true;
+            this.RestartAfterPeriod.Location = new System.Drawing.Point(14, 207);
+            this.RestartAfterPeriod.Name = "RestartAfterPeriod";
+            this.RestartAfterPeriod.Size = new System.Drawing.Size(118, 17);
+            this.RestartAfterPeriod.TabIndex = 15;
+            this.RestartAfterPeriod.Text = "Restart After Period";
+            this.RestartAfterPeriod.UseVisualStyleBackColor = true;
+            // 
+            // RestartPeriodDuration
+            // 
+            this.RestartPeriodDuration.Location = new System.Drawing.Point(141, 204);
+            this.RestartPeriodDuration.Name = "RestartPeriodDuration";
+            this.RestartPeriodDuration.Size = new System.Drawing.Size(72, 20);
+            this.RestartPeriodDuration.TabIndex = 16;
+            // 
             // ProcessDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 711);
+            this.ClientSize = new System.Drawing.Size(484, 757);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.PostCrashGroup);
             this.Controls.Add(this.ProcessPreStartGroup);
@@ -560,5 +581,7 @@
         private System.Windows.Forms.RadioButton StartupStateRunningControl;
         private System.Windows.Forms.RadioButton StartupStateStoppedControl;
         private System.Windows.Forms.Label StartupStateLabel;
+        private System.Windows.Forms.TextBox RestartPeriodDuration;
+        private System.Windows.Forms.CheckBox RestartAfterPeriod;
     }
 }

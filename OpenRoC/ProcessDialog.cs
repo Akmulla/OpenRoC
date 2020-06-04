@@ -82,6 +82,9 @@
             ProcessOptionGracePeriodEnabledControl.SetupDataBind(Options, nameof(Options.GracePeriodEnabled));
             ProcessOptionGracePeriodDurationControl.SetupDataBind(Options, nameof(Options.GracePeriodDuration));
 
+            RestartAfterPeriod.SetupDataBind(Options, nameof(Options.RestartAfterPeriod));
+            RestartPeriodDuration.SetupDataBind(Options, nameof(Options.RestartPeriodDuration));
+
             ProcessOptionPreLaunchScriptEnabledControl.SetupDataBind(Options, nameof(Options.PreLaunchScriptEnabled));
             ProcessOptionPreLaunchScriptPathControl.SetupDataBind(Options, nameof(Options.PreLaunchScriptPath));
 

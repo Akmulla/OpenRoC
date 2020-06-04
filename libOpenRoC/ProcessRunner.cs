@@ -110,7 +110,8 @@
             if (options.DoubleCheckEnabled)
                 doubleCheckTimer.Interval = TimeSpan.FromSeconds(options.DoubleCheckDuration).TotalMilliseconds;
 
-            restartTimer.Interval = TimeSpan.FromSeconds(5).TotalMilliseconds;
+            if (options.RestartAfterPeriod)
+                restartTimer.Interval = TimeSpan.FromSeconds(options.RestartPeriodDuration).TotalMilliseconds;
 
             ResetTimers();
         }
@@ -252,22 +253,34 @@
 
         public void Monitor()
         {
-            if (restartTimerSignal.IsSet)
+            if (options.RestartAfterPeriod)
             {
-                TimeToRestart?.Invoke();
+                if (restartTimerSignal.IsSet)
+                {
+                    TimeToRestart?.Invoke();
 
-                Stop();
+                    Stop();
 
-                restartTimerSignal.Reset();
+                    restartTimerSignal.Reset();
 
-                Start();
+                    Start();
+                }
+                else
+                {
+                    if (!restartTimer.Enabled)
+                        restartTimer.Start();
+                }
             }
             else
             {
-                if (!restartTimer.Enabled)
-                    restartTimer.Start();
+                if (restartTimerSignal.IsSet)
+                {
+                    restartTimerSignal.Reset();
+                }
+
+                if (restartTimer.Enabled)
+                    restartTimer.Stop();
             }
-                
 
             if (crashSignal.IsSet)
             {
@@ -464,14 +477,18 @@
                     startSignal?.Dispose();
                     checkSignal?.Dispose();
                     resetTimer?.Dispose();
+                    restartTimer?.Dispose();
+                    restartTimerSignal?.Dispose();
                 }
 
                 gracePeriodTimer = null;
                 doubleCheckTimer = null;
+                restartTimer = null;
                 crashSignal = null;
                 startSignal = null;
                 checkSignal = null;
                 resetTimer = null;
+                restartTimerSignal = null;
             }
         }
 

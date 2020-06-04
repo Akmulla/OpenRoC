@@ -194,6 +194,19 @@
             }
         }
 
+        public uint RestartPeriodDuration
+        {
+            get { return restartPeriodDuration; }
+            set
+            {
+                if (restartPeriodDuration == value)
+                    return;
+
+                restartPeriodDuration = value;
+                NotifyPropertyChanged(nameof(RestartPeriodDuration));
+            }
+        }
+
         public bool PreLaunchScriptEnabled
         {
             get { return preLaunchScriptEnabled; }
@@ -392,6 +405,8 @@
             clone.doubleCheckDuration = DoubleCheckDuration;
             clone.gracePeriodEnabled = GracePeriodEnabled;
             clone.gracePeriodDuration = GracePeriodDuration;
+            clone.restartAfterPeriod = RestartAfterPeriod;
+            clone.restartPeriodDuration = RestartPeriodDuration;
             clone.preLaunchScriptEnabled = PreLaunchScriptEnabled;
             clone.preLaunchScriptPath = PreLaunchScriptPath;
             clone.aggressiveCleanupEnabled = AggressiveCleanupEnabled;
