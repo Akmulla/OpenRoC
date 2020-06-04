@@ -14,14 +14,18 @@
         Signal startSignal;
         Signal checkSignal;
         Signal resetTimer;
+        Signal restartTimerSignal;
         Timer gracePeriodTimer;
         Timer doubleCheckTimer;
+        Timer restartTimer;
         ProcessOptions options;
 
         public Action StateChanged;
         public Action OptionsChanged;
         public Action ProcessChanged;
         public Action ProcessCrashed;
+        ///////
+        public Action TimeToRestart;
 
         public enum Status
         {
@@ -69,11 +73,14 @@
             startSignal = new Signal(false);
             checkSignal = new Signal(false);
             crashSignal = new Signal(false);
+            restartTimerSignal = new Signal(false);
             options = opts.Clone() as ProcessOptions;
             gracePeriodTimer = new Timer { AutoReset = false, Enabled = false };
             doubleCheckTimer = new Timer { AutoReset = false, Enabled = false };
+            restartTimer = new Timer { AutoReset = false, Enabled = false };
             gracePeriodTimer.Elapsed += OnGracePeriodTimeElapsed;
             doubleCheckTimer.Elapsed += OnDoubleCheckTimeElapsed;
+            restartTimer.Elapsed += OnRestartTimerElapsed;
             SetupOptions();
         }
 
@@ -102,6 +109,8 @@
 
             if (options.DoubleCheckEnabled)
                 doubleCheckTimer.Interval = TimeSpan.FromSeconds(options.DoubleCheckDuration).TotalMilliseconds;
+
+            restartTimer.Interval = TimeSpan.FromSeconds(5).TotalMilliseconds;
 
             ResetTimers();
         }
@@ -243,6 +252,23 @@
 
         public void Monitor()
         {
+            if (restartTimerSignal.IsSet)
+            {
+                TimeToRestart?.Invoke();
+
+                Stop();
+
+                restartTimerSignal.Reset();
+
+                Start();
+            }
+            else
+            {
+                if (!restartTimer.Enabled)
+                    restartTimer.Start();
+            }
+                
+
             if (crashSignal.IsSet)
             {
                 ProcessCrashed?.Invoke();
@@ -386,6 +412,13 @@
         {
             startSignal.Set();
             gracePeriodTimer.Stop();
+        }
+
+        private void OnRestartTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            Debug.WriteLine("It's time to restart");
+            restartTimerSignal.Set();
+            restartTimer.Stop();
         }
 
         #endregion

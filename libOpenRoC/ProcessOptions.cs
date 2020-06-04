@@ -17,6 +17,8 @@
         private uint doubleCheckDuration;
         private bool gracePeriodEnabled;
         private uint gracePeriodDuration;
+        private bool restartAfterPeriod;
+        private uint restartPeriodDuration;
         private bool preLaunchScriptEnabled;
         private string preLaunchScriptPath;
         private bool aggressiveCleanupEnabled;
@@ -54,6 +56,8 @@
             doubleCheckDuration = 0;
             gracePeriodEnabled = false;
             gracePeriodDuration = 0;
+            restartAfterPeriod = false;
+            restartPeriodDuration = 0;
             preLaunchScriptEnabled = false;
             preLaunchScriptPath = string.Empty;
             aggressiveCleanupEnabled = true;
@@ -161,6 +165,19 @@
 
                 gracePeriodEnabled = value;
                 NotifyPropertyChanged(nameof(GracePeriodEnabled));
+            }
+        }
+
+        public bool RestartAfterPeriod
+        {
+            get { return restartAfterPeriod; }
+            set
+            {
+                if (restartAfterPeriod == value)
+                    return;
+
+                restartAfterPeriod = value;
+                NotifyPropertyChanged(nameof(RestartAfterPeriod));
             }
         }
 

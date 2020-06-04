@@ -137,6 +137,11 @@
                         if (p.ProcessOptions.ScreenShotEnabled)
                             TakeScreenShot();
                     };
+                    //
+                    p.TimeToRestart += () =>
+                     {
+                         Log.e("Process {0} is restarting", p.ProcessOptions.Path);
+                     };
 
                     ProcessListView.Items.Add(item);
                 }
